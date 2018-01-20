@@ -24,7 +24,7 @@ public class Expense {
     private Date date;
 
     @JsonDeserialize(using = MoneyDeserializer.class)
-    private BigInteger amount;
+    private Long amount;
 
     private String reason;
 
