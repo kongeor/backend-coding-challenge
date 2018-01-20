@@ -46,6 +46,7 @@ try {
 	var tasksGit = require("./tasks-git.js");
 	var tasksMisc = require("./tasks-misc.js");
 	var connect = require("gulp-connect");
+	var proxy = require('http-proxy-middleware');
 }
 catch (error) {
 	console.log(error);
@@ -388,8 +389,18 @@ gulp.task("less", gulpsync.sync(["gitinfo", "uncompressed", "copyfrom", "html", 
 // App scripts only build chain
 gulp.task("apps", gulpsync.sync(["gitinfo", "uncompressed", "copyfrom", "html", "iconfont", "apps-scripts", "copyto"], "sync apps"));
 
-gulp.task("server", ["dev"], function() {
-	connect.server({ root: config.target });
+gulp.task("server", ["dev"], function () {
+	connect.server({
+		root: config.target,
+		middleware: function(connect, opt) {
+            return [
+                proxy('/api', {
+                    target: 'http://localhost:8888',
+                    changeOrigin:true
+                })
+            ]
+        }
+	});
 });
 
 // Present help info

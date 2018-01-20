@@ -49,6 +49,7 @@
     "watchify": "^3.7.0"
   },
   "devDependencies": {
-    "gulp-connect": "^5.0.0"
+    "gulp-connect": "^5.0.0",
+    "http-proxy-middleware": "^0.17.4"
   }
 }
