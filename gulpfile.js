@@ -394,7 +394,7 @@ gulp.task("server", ["dev"], function () {
 		root: config.target,
 		middleware: function(connect, opt) {
             return [
-                proxy('/api', {
+                proxy('/app', {
                     target: 'http://localhost:8888',
                     changeOrigin:true
                 })
