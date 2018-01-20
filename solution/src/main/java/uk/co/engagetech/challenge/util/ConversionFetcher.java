@@ -18,11 +18,14 @@ public class ConversionFetcher {
         restTemplate = new RestTemplate();
     }
 
-
-    public Float getEurToGpbRate() {
+    /**
+     * Gets the EUR ratio based on GBP
+     * @return the ratio
+     */
+    public Float getEurRate() {
         try {
-            FixerResource resource = restTemplate.getForEntity("https://api.fixer.io/latest", FixerResource.class).getBody();
-            return resource.getRates().getGbp();
+            FixerResource resource = restTemplate.getForEntity("https://api.fixer.io/latest?base=GBP&symbols=EUR", FixerResource.class).getBody();
+            return resource.getRates().getEur();
         } catch (RestClientException e) {
             throw new RateUnavailableException(e);
         }

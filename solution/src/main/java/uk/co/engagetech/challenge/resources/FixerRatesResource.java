@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FixerRatesResource {
 
-    @JsonProperty("GBP")
-    private Float gbp;
+    @JsonProperty("EUR")
+    private Float eur;
 
-    public Float getGbp() {
-        return gbp;
+    public Float getEur() {
+        return eur;
     }
 
-    public void setGbp(Float gbp) {
-        this.gbp = gbp;
+    public void setEur(Float eur) {
+        this.eur = eur;
     }
 }
