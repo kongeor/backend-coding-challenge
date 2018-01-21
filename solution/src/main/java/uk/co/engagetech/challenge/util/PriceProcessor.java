@@ -5,11 +5,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class PriceProcessor {
 
     private static final double UK_VAT = 0.2f;
+
+    private static final Pattern CLIENT_AMOUNT_PATTERN =
+            Pattern.compile("^(?<pounds>\\d+)(\\.(?<cents>\\d{2}))?\\s?(?<curr>[A-Z]{3})?$");
 
     private ConversionFetcher conversionFetcher;
 
@@ -22,36 +27,30 @@ public class PriceProcessor {
      * Parses the following formats:
      * - "10" -> 1000
      * - "10.10" -> 10.10
-     * - "10.10 EUR" -> TODO
+     * - "10.10 EUR" -> will fetch the current EUR rating and do then the appropriate conversion
      * @param value the value to parse
      * @return the amount in cents using a BigInteger
      */
     public long fuzzyParse(String value) {
         if (!StringUtils.isEmpty(value)) {
             value = StringUtils.trimWhitespace(value);
-            String[] tokens = value.split(" ");
-            if (tokens.length == 1) { // no currency
-                return getPrice(value);
-            } else if (tokens.length == 2 && tokens[1].equalsIgnoreCase("eur")) {
-                return Math.round(getPrice(tokens[0]) / conversionFetcher.getEurRate());
-            }
-        }
-        throw new IllegalArgumentException("Invalid value: " + value);
-    }
 
-    private long getPrice(String value) {
-        String[] tokens = value.split("\\.");
-        try {
-            if (tokens.length == 0) {
-                return Long.parseLong(value) * 100;
-            } else if (tokens.length == 1) {
-                return Long.parseLong(tokens[0]) * 100;
-            } else if (tokens.length == 2) {
-                return Long.parseLong(tokens[0]) * 100
-                        + Long.parseLong(tokens[1]);
+            Matcher matcher = CLIENT_AMOUNT_PATTERN.matcher(value);
+            if (matcher.find()) {
+                String pounds = matcher.group("pounds");
+                String cents = matcher.group("cents");
+                if (cents == null) {
+                    cents = "0";
+                }
+                String curr = matcher.group("curr");
+
+                long amount = Long.parseLong(pounds) * 100 + Long.parseLong(cents);
+
+                if (curr != null && curr.equalsIgnoreCase("EUR")) {
+                    amount = Math.round(amount / conversionFetcher.getEurRate());
+                }
+                return amount;
             }
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(e);
         }
         throw new IllegalArgumentException("Invalid value: " + value);
     }
