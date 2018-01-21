@@ -1,0 +1,9 @@
+spring:
+    datasource:
+        platform: postgres
+        username: engage_test
+        password: engage_test
+        url: jdbc:postgresql://localhost:5432/engage_test
+    jpa:
+        database: POSTGRESQL
+        show-sql: true

@@ -49,4 +49,12 @@ public class PriceProcessorTest {
     public void calc_net_test() {
         assertEquals(833, priceProcessor.calcNet(1000));
     }
+
+    @Test
+    public void two_digit_formatting() {
+        String value = priceProcessor.toTwoDigitFloatString(10000L);
+        assertEquals("100.00", value);
+        value = priceProcessor.toTwoDigitFloatString(10025L);
+        assertEquals("100.25", value);
+    }
 }

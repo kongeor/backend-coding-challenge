@@ -3,27 +3,24 @@ package uk.co.engagetech.challenge.expenses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.co.engagetech.challenge.domain.Expense;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/app/expenses")
 public class ExpensesController {
 
     @Autowired
-    private ExpensesRepository repository;
+    private ExpensesService service;
 
     @PostMapping
-    public ResponseEntity<Expense> createExpense(@RequestBody Expense expense) {
-        System.out.println(expense);
-        // TODO
-        return ResponseEntity.ok(repository.save(expense));
+    public ResponseEntity<ExpenseResource> createExpense(@RequestBody ExpenseResource expense) {
+        return ResponseEntity.ok(service.createExpense(expense));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<Expense>> fetchExpenses() {
-        // TODO;
-        return ResponseEntity.ok(repository.findAll());
+    public ResponseEntity<List<ExpenseResource>> fetchExpenses() {
+        return ResponseEntity.ok(service.fetchAll());
     }
-
 
 }

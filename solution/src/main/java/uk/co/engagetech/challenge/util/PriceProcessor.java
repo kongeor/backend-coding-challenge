@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.text.DecimalFormat;
+
 @Component
 public class PriceProcessor {
 
@@ -34,7 +36,7 @@ public class PriceProcessor {
                 return Math.round(getPrice(tokens[0]) / conversionFetcher.getEurRate());
             }
         }
-        throw new UnsupportedOperationException("TODO");
+        throw new IllegalArgumentException("Invalid value: " + value);
     }
 
     private long getPrice(String value) {
@@ -62,6 +64,17 @@ public class PriceProcessor {
 
     public long calcNet(long gross) {
         return gross - calcVat(gross);
+    }
+
+    public String toTwoDigitFloatString(Long cents) {
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+        if (cents == null) {
+            return null;
+        } else {
+            return df.format(cents / 100f);
+        }
     }
 
 }
