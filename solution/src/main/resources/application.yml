@@ -1,0 +1,13 @@
+server:
+    port: 8888
+
+spring:
+    datasource:
+        platform: postgres
+        username: engage
+        password: engage
+        url: jdbc:postgresql://localhost:5432/engage
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        database: POSTGRESQL
+        show-sql: true
