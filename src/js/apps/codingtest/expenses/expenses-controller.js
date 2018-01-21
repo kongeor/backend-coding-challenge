@@ -17,6 +17,7 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 	$rootScope.selectTabSection("expenses", 0);
 
 	var restExpenses = $restalchemy.init({ root: $config.apiroot }).at("expenses");
+	var restQueryVat = $restalchemy.init({ root: $config.apiroot }).at("query/vat");
 
 	$scope.dateOptions = {
 		changeMonth: true,
@@ -40,6 +41,14 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 			});
 		}
 	};
+
+	$scope.calcVat = function() {
+		restQueryVat.get({'amount': $scope.newExpense.amount}).then(function(data) {
+			$scope.newExpense.vat = data.vat;
+		}).error(function() {
+			$scope.newExpense.vat = "N/A";
+		});
+	}
 
 	$scope.clearExpense = function() {
 		$scope.newExpense = {};
