@@ -70,4 +70,38 @@ public class ExpensesControllerIntegrationTest {
                     body("[0].amount", equalTo("100.00")).
                     body("[0].reason", equalTo("Foo bar"));
     }
+
+    @Test
+    public void empty_payload() {
+        ExpenseResource exp1 = new ExpenseResource();
+
+        given().
+                port(port).
+                contentType(ContentType.JSON).
+                body(exp1).
+                when().
+                    post("/app/expenses").
+                then().
+                statusCode(422).
+                    body("errors.date[0]", equalTo("may not be null")).
+                    body("errors.amount[0]", equalTo("may not be null"));
+    }
+
+    @Test
+    public void invalid_payload() {
+        ExpenseResource exp1 = new ExpenseResource();
+        exp1.setDate("adf");
+        exp1.setAmount("adf");
+
+        given().
+                port(port).
+                contentType(ContentType.JSON).
+                    body(exp1).
+                when().
+                    post("/app/expenses").
+                then().
+                    statusCode(422).
+                    body("errors.date[0]", equalTo("date format is invalid")).
+                    body("errors.amount[0]", equalTo("amount must be a properly formatted positive number"));
+    }
 }

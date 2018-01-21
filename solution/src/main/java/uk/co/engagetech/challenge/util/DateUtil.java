@@ -9,10 +9,14 @@ public class DateUtil {
     private static final SimpleDateFormat CLIENT_DATE_FMT = new SimpleDateFormat("dd/MM/yyyy");
 
     public static Date parseClientDate(String value) {
-        try {
-            return CLIENT_DATE_FMT.parse(value);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
+        if (value == null) {
+            return null;
+        } else {
+            try {
+                return CLIENT_DATE_FMT.parse(value);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
         }
     }
 

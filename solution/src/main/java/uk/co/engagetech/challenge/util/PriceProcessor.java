@@ -23,10 +23,10 @@ public class PriceProcessor {
      * - "10" -> 1000
      * - "10.10" -> 10.10
      * - "10.10 EUR" -> TODO
-     * @param value
+     * @param value the value to parse
      * @return the amount in cents using a BigInteger
      */
-    public long fuzzyConvert(String value) {
+    public long fuzzyParse(String value) {
         if (!StringUtils.isEmpty(value)) {
             value = StringUtils.trimWhitespace(value);
             String[] tokens = value.split(" ");

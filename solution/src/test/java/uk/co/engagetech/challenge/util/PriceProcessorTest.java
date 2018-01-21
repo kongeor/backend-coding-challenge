@@ -23,21 +23,21 @@ public class PriceProcessorTest {
 
     @Test
     public void convert_no_decimal() {
-        assertEquals(1000, priceProcessor.fuzzyConvert("10"));
-        assertEquals(1000, priceProcessor.fuzzyConvert(" 10 "));
+        assertEquals(1000, priceProcessor.fuzzyParse("10"));
+        assertEquals(1000, priceProcessor.fuzzyParse(" 10 "));
     }
 
     @Test
     public void convert_decimal() {
-        assertEquals(1000, priceProcessor.fuzzyConvert("10.00"));
-        assertEquals(1012, priceProcessor.fuzzyConvert(" 10.12"));
-        assertEquals(1012, priceProcessor.fuzzyConvert(" 10.12"));
+        assertEquals(1000, priceProcessor.fuzzyParse("10.00"));
+        assertEquals(1012, priceProcessor.fuzzyParse(" 10.12"));
+        assertEquals(1012, priceProcessor.fuzzyParse(" 10.12"));
     }
 
     @Test
     public void convert_eur() {
-        assertEquals(1000, priceProcessor.fuzzyConvert("12 EUR"));
-        assertEquals(833, priceProcessor.fuzzyConvert("10 EUR"));
+        assertEquals(1000, priceProcessor.fuzzyParse("12 EUR"));
+        assertEquals(833, priceProcessor.fuzzyParse("10 EUR"));
     }
 
     @Test

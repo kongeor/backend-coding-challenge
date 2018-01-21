@@ -24,7 +24,7 @@ public class ExpensesService {
 
     public ExpenseResource createExpense(ExpenseResource resource) {
         Expense exp = new Expense();
-        exp.setAmount(priceProcessor.fuzzyConvert(resource.getAmount()));
+        exp.setAmount(priceProcessor.fuzzyParse(resource.getAmount()));
         exp.setDate(DateUtil.parseClientDate(resource.getDate()));
         exp.setReason(resource.getReason());
 
