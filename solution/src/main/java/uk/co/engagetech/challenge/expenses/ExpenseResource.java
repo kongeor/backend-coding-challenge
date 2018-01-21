@@ -1,6 +1,7 @@
 package uk.co.engagetech.challenge.expenses;
 
 
+import org.hibernate.validator.constraints.NotBlank;
 import uk.co.engagetech.challenge.validation.Amount;
 import uk.co.engagetech.challenge.validation.ClientDate;
 
@@ -15,6 +16,10 @@ public class ExpenseResource {
     @NotNull
     @Amount
     private String amount;
+
+    private String vat;
+
+    @NotBlank
     private String reason;
 
     public String getDate() {
@@ -31,6 +36,14 @@ public class ExpenseResource {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getVat() {
+        return vat;
+    }
+
+    public void setVat(String vat) {
+        this.vat = vat;
     }
 
     public String getReason() {

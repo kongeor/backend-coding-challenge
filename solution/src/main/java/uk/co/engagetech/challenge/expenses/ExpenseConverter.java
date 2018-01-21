@@ -17,6 +17,7 @@ public class ExpenseConverter implements Converter<Expense, ExpenseResource> {
     public ExpenseResource convert(Expense source) {
         ExpenseResource resource = new ExpenseResource();
         resource.setAmount(priceProcessor.toTwoDigitFloatString(source.getAmount()));
+        resource.setVat(priceProcessor.toTwoDigitFloatString(source.getVat()));
         resource.setDate(DateUtil.toClientDate(source.getDate()));
         resource.setReason(source.getReason());
 

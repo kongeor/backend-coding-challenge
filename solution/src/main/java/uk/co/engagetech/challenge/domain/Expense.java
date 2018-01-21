@@ -15,6 +15,7 @@ public class Expense {
 
     private Date date;
     private Long amount;
+    private Long vat;
     private String reason;
 
     public Integer getId() {
@@ -39,6 +40,14 @@ public class Expense {
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    public Long getVat() {
+        return vat;
+    }
+
+    public void setVat(Long vat) {
+        this.vat = vat;
     }
 
     public String getReason() {
