@@ -60,6 +60,17 @@ By running `gulp`, the webapp will be served on port 8080 and
 all requests to _/app/*_ will be proxied to 8888
 
 
+## Running tests
+
+Run
+
+```bash
+$ ./gradlew test
+```
+
+to run unit and integration tests
+
+
 ## Putting everything together
 
 In the top level folder run the `prod-build.sh` script to produce
