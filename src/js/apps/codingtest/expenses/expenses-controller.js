@@ -30,7 +30,7 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 		restExpenses.get().then(function(expenses) {
 			$scope.expenses = expenses;
 		});
-	}
+	};
 
 	$scope.saveExpense = function() {
 		if ($scope.expensesform.$valid) {
@@ -43,12 +43,12 @@ app.controller("ctrlExpenses", ["$rootScope", "$scope", "config", "restalchemy",
 	};
 
 	$scope.calcVat = function() {
-		restQueryVat.get({'amount': $scope.newExpense.amount}).then(function(data) {
+		restQueryVat.get({ "amount": $scope.newExpense.amount }).then(function(data) {
 			$scope.newExpense.vat = data.vat;
 		}).error(function() {
 			$scope.newExpense.vat = "N/A";
 		});
-	}
+	};
 
 	$scope.clearExpense = function() {
 		$scope.newExpense = {};
