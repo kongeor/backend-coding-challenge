@@ -3,7 +3,7 @@
 
 ## Dependencies
 
-Make sure you have installed `java` and `postgresql`.
+Make sure you have `java` and `postgresql` installed.
 
 Verify that `java` is properly set:
 
@@ -31,7 +31,7 @@ create database engage;
 create database engage_test;
 ```
 
-Create two users each one being the owner of these two databases:
+Create two users and update the database ownership:
 
 ```psql
 create user engage with password 'engage';
@@ -62,8 +62,15 @@ all requests to _/app/*_ will be proxied to 8888
 
 ## Putting everything together
 
+In the top level folder run the `prod-build.sh` script to produce
+a production bundle. The produced `jar` can be found in the `solution/build/libs` folder.
+
+Override the default application properties as follows:
+
+```bash
+$ java -jar solution-0.0.1-SNAPSHOT.jar --server.port=8887
+```
 
 
-IMPORTANT
-====
-To avoid unconcious bias, we aim to have your submission reviewed anonymously by one of our engineering team. Please try and avoid adding personal details to this document such as your name, or using pronouns that might indicate your gender.
+
+
