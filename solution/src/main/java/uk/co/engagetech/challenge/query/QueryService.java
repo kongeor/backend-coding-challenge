@@ -11,12 +11,18 @@ public class QueryService {
     private PriceProcessor priceProcessor;
 
     public VatResource fetchVatFromAmount(String amountStr) {
-        long amount = priceProcessor.fuzzyParse(amountStr);
-        long vat = priceProcessor.calcVat(amount);
-        String formattedVat = priceProcessor.toTwoDigitFloatString(vat);
         VatResource resource = new VatResource();
-        resource.setVat(formattedVat);
+        resource.setVat(getFormattedVat(amountStr));
         return resource;
+    }
 
+    private String getFormattedVat(String amountStr) {
+        try {
+            long amount = priceProcessor.fuzzyParse(amountStr);
+            long vat = priceProcessor.calcVat(amount);
+            return priceProcessor.toTwoDigitFloatString(vat);
+        } catch (IllegalArgumentException e) {
+            return "N/A";
+        }
     }
 }

@@ -24,6 +24,7 @@ repositories {
 
 
 dependencies {
+	compile('com.google.guava:guava:23.6-jre')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.flywaydb:flyway-core')
 	compile('org.springframework.boot:spring-boot-starter-validation')
